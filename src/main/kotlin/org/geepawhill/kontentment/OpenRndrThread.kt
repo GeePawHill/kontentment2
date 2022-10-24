@@ -4,23 +4,12 @@ import org.openrndr.application
 import org.openrndr.math.IntVector2
 import kotlin.concurrent.thread
 
-class OpenRndrThread {
-    private var played = mutableListOf<Atom>()
-    private var sequence = mutableListOf<Atom>()
-    var player: OldPlayer
+class OpenRndrThread(_script: Script) {
+    var script = _script
     var playing = false
-    var iterator = sequence.iterator()
+    var player: Player = script.next(0.0)
 
     private var next = 0
-
-    init {
-        (0..5).forEach {
-            sequence += LineAtom()
-        }
-        iterator = sequence.iterator()
-        player = OldPlayer(0.0, sequence[next])
-        next += 1
-    }
 
     val thread = thread(start = false, isDaemon = true) {
         application {
@@ -32,14 +21,13 @@ class OpenRndrThread {
 
             program {
                 extend {
-                    for (atom in played) atom.interpolate(drawer, 1.0)
+                    script.played(drawer)
                     if (playing) {
                         val finished = player.play(drawer, seconds)
                         if (finished) {
-                            played += player.atom
-                            if (iterator.hasNext()) {
-                                player = OldPlayer(seconds, iterator.next())
-                            } else playing = false
+                            script.finished(player)
+                            if (script.hasNext()) player = script.next(seconds)
+                            else playing = false
                         }
                     }
                 }

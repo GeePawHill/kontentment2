@@ -12,6 +12,7 @@ class LineAtom : Atom {
     val to = Point(Random.double(0.0, width), Random.double(0.0, height))
 
     override fun interpolate(drawer: Drawer, fraction: Double) {
+        drawer.stroke = ColorRGBa.WHITE
         val newTo = from.along(fraction, to)
         drawer.stroke = ColorRGBa.WHITE
         drawer.lineSegment(from.toVector(), newTo.toVector())

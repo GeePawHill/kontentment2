@@ -3,7 +3,8 @@ package org.geepawhill.kontentment
 import tornadofx.*
 
 class MainView : View("Gerrymandering Game") {
-    val thread = OpenRndrThread().apply { start() }
+    val script = Script()
+    val thread = OpenRndrThread(script).apply { start() }
     override val root = vbox {
         minWidth = 400.0
         label("Hi Mom!")
