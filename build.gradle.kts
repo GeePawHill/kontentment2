@@ -95,7 +95,7 @@ plugins {
 }
 
 javafx {
-    version = "15"
+    version = "17"
     modules = mutableListOf(
         "javafx.controls",
         "javafx.graphics",
@@ -147,11 +147,11 @@ tasks.test {
 // ------------------------------------------------------------------------------------------------------------------ //
 
 java {
-    sourceCompatibility = JavaVersion.VERSION_11
-    targetCompatibility = JavaVersion.VERSION_11
+    sourceCompatibility = JavaVersion.VERSION_17
+    targetCompatibility = JavaVersion.VERSION_17
 }
 tasks.withType<KotlinCompile> {
-    kotlinOptions.jvmTarget = "11"
+    kotlinOptions.jvmTarget = "17"
 }
 
 // ------------------------------------------------------------------------------------------------------------------ //
