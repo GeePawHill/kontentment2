@@ -7,31 +7,32 @@ class Script {
     val sequence = mutableListOf<Atom>()
     val played = mutableListOf<Atom>()
     var next = 0
-    var current: Player
+    var current: Atom
 
     init {
         sequence.add(Atom.NONE)
         (0..5).forEach {
             sequence += LineAtom()
         }
-        current = Player(sequence[0])
+        sequence.add(Atom.NONE)
+        current = sequence[0]
     }
 
     fun hasNext() = next < sequence.size - 1
 
-    fun next(start: Double): Player {
-        current = Player(sequence[next++])
+    fun next(start: Double): Atom {
+        current = sequence[next++]
         return current
     }
 
     fun played(drawer: Drawer) {
         played.forEach {
-            it.interpolate(drawer, 1.0)
+            it.interpolate(drawer, Double.MAX_VALUE)
         }
     }
 
-    fun finished(player: Player) {
-        played.add(player.atom)
+    fun finished(atom: Atom) {
+        played.add(atom)
     }
 
 }
