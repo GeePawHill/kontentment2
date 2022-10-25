@@ -9,7 +9,7 @@ class Script {
 
     init {
         sequence.add(Atom.NONE)
-        (0..4).forEach {
+        (0..99).forEach {
             sequence += LineAtom()
         }
         sequence.add(Atom.NONE)

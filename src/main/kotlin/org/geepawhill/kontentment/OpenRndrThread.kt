@@ -43,6 +43,7 @@ class OpenRndrThread(_script: Script, val announcer: Announcer) {
             if (script.hasNext()) {
                 current = script.next()
                 atomClock.reset()
+                println(frameCount / seconds)
             } else {
                 current = Atom.NONE
                 pause()
