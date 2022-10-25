@@ -1,17 +1,15 @@
 package org.geepawhill.kontentment
 
-import org.openrndr.draw.Drawer
-
 class Script {
 
     val sequence = mutableListOf<Atom>()
-    val played = mutableListOf<Atom>()
+    val completed = mutableListOf<Atom>()
     var next = 0
     var current: Atom
 
     init {
         sequence.add(Atom.NONE)
-        (0..5).forEach {
+        (0..4).forEach {
             sequence += LineAtom()
         }
         sequence.add(Atom.NONE)
@@ -20,19 +18,13 @@ class Script {
 
     fun hasNext() = next < sequence.size - 1
 
-    fun next(start: Double): Atom {
+    fun next(): Atom {
         current = sequence[next++]
         return current
     }
 
-    fun played(drawer: Drawer) {
-        played.forEach {
-            it.interpolate(drawer, Double.MAX_VALUE)
-        }
-    }
-
     fun finished(atom: Atom) {
-        played.add(atom)
+        completed.add(atom)
     }
 
 }
