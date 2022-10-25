@@ -3,7 +3,7 @@ package org.geepawhill.kontentment.announce
 import kotlin.reflect.KClass
 import kotlin.reflect.full.isSuperclassOf
 
-class NormalDispatcher<T : Announcement>(val clazz: KClass<*>, val handler: (announcement: T) -> Unit) : Dispatcher {
+class BasicDispatcher<T : Announcement>(val clazz: KClass<*>, val handler: (announcement: T) -> Unit) : Dispatcher {
     override fun dispatch(announcement: Announcement) {
         val aClazz = announcement::class
         if (clazz.isInstance(announcement) || clazz.isSuperclassOf(aClazz)) {

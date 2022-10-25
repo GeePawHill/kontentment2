@@ -10,7 +10,7 @@ class BasicAnnouncer : Announcer {
     }
 
     override fun <T : Announcement> subscribe(clazz: KClass<T>, handler: (announcement: T) -> Unit) {
-        val dispatcher = NormalDispatcher(clazz, handler)
+        val dispatcher = BasicDispatcher(clazz, handler)
         dispatchers += dispatcher
     }
 }

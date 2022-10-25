@@ -1,8 +1,6 @@
-package org.geepawhill.kontentment
+package org.geepawhill.kontentment.announce
 
 import org.assertj.core.api.Assertions.assertThat
-import org.geepawhill.kontentment.announce.Announcement
-import org.geepawhill.kontentment.announce.BasicAnnouncer
 import org.junit.jupiter.api.Test
 
 class BasicAnnouncerTest {
@@ -37,9 +35,11 @@ class BasicAnnouncerTest {
     @Test
     fun `use member function works`() {
         announcer.subscribe(MySubAnnouncement::class, this::handle)
-        announcer.announce(MyAnnouncement())
-        assertThat(announced).isFalse()
+        announcer.announce(MySubAnnouncement())
+        assertThat(announced).isTrue()
     }
 
-    fun handle(announcement: MySubAnnouncement) {}
+    fun handle(announcement: MySubAnnouncement) {
+        announced = true
+    }
 }
