@@ -1,6 +1,8 @@
 package org.geepawhill.kontentment
 
 import org.geepawhill.kontentment.announce.Announcer
+import org.geepawhill.kontentment.controller.NowPaused
+import org.geepawhill.kontentment.controller.NowPlaying
 import org.openrndr.application
 import org.openrndr.math.IntVector2
 import kotlin.concurrent.thread
@@ -28,7 +30,7 @@ class OpenRndrThread(_script: Script, val announcer: Announcer) {
                         if (finished) {
                             script.finished(player)
                             if (script.hasNext()) player = script.next(seconds)
-                            else playing = false
+                            else pause()
                         }
                     }
                 }
@@ -42,5 +44,11 @@ class OpenRndrThread(_script: Script, val announcer: Announcer) {
 
     fun play() {
         playing = true
+        announcer.announce(NowPlaying())
+    }
+
+    fun pause() {
+        playing = false
+        announcer.announce(NowPaused())
     }
 }

@@ -16,6 +16,9 @@ class BasicAnnouncerTest {
         announcer.subscribe(MyAnnouncement::class) { announced = true }
         announcer.announce(MyAnnouncement())
         assertThat(announced).isTrue()
+
+        val x = mutableListOf<Int>()
+        assertThat(x).contains(3)
     }
 
     @Test

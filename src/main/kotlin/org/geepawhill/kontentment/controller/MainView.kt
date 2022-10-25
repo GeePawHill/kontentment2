@@ -1,4 +1,4 @@
-package org.geepawhill.kontentment
+package org.geepawhill.kontentment.controller
 
 import tornadofx.*
 
@@ -8,8 +8,19 @@ class MainView : View("Gerrymandering Game") {
         minWidth = 400.0
         top = toolbar {
             button("Play") {
+                enableWhen {
+                    model.canPlay
+                }
                 action {
                     model.play()
+                }
+            }
+            button("Pause") {
+                enableWhen {
+                    model.canPause
+                }
+                action {
+                    model.pause()
                 }
             }
         }
