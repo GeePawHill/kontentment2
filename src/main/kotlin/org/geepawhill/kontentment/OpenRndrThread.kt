@@ -14,6 +14,8 @@ class OpenRndrThread(_script: Script, val announcer: Announcer) {
 
     private var next = 0
 
+    private val atomClock = AtomClock()
+
     val thread = thread(start = false, isDaemon = true) {
         application {
             configure {
@@ -24,14 +26,15 @@ class OpenRndrThread(_script: Script, val announcer: Announcer) {
 
             program {
                 extend {
+                    atomClock.tick(seconds)
                     script.played(drawer)
-                    if (playing) {
-                        val finished = player.play(drawer, seconds)
-                        if (finished) {
-                            script.finished(player)
-                            if (script.hasNext()) player = script.next(seconds)
-                            else pause()
-                        }
+                    val finished = player.play(drawer, atomClock.delta)
+                    if (finished) {
+                        script.finished(player)
+                        if (script.hasNext()) {
+                            player = script.next(0.0)
+                            atomClock.reset()
+                        } else pause()
                     }
                 }
             }
@@ -44,11 +47,13 @@ class OpenRndrThread(_script: Script, val announcer: Announcer) {
 
     fun play() {
         playing = true
+        atomClock.resume()
         announcer.announce(NowPlaying())
     }
 
     fun pause() {
         playing = false
+        atomClock.pause()
         announcer.announce(NowPaused())
     }
 }

@@ -1,6 +1,6 @@
 package org.geepawhill.kontentment
 
-class Clock {
+class AtomClock {
 
     var delta: Double = 0.0
         private set
@@ -31,5 +31,11 @@ class Clock {
         if (playing) {
             delta = now - start
         }
+    }
+
+    fun tick(now: Double, playing: Boolean) {
+        tick(now)
+        if (playing) resume()
+        else pause()
     }
 }

@@ -11,6 +11,8 @@ class LineAtom : Atom {
     val from = Point(Random.double(0.0, width), Random.double(0.0, height))
     val to = Point(Random.double(0.0, width), Random.double(0.0, height))
 
+    override val duration = from.distance(to) * 0.2
+
     override fun interpolate(drawer: Drawer, fraction: Double) {
         val newTo = from.along(fraction, to)
         drawer.stroke = ColorRGBa.WHITE

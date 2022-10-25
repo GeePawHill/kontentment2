@@ -14,13 +14,13 @@ class Script {
         (0..5).forEach {
             sequence += LineAtom()
         }
-        current = Player(0.0, sequence[0], emptyList())
+        current = Player(sequence[0])
     }
 
     fun hasNext() = next < sequence.size - 1
 
     fun next(start: Double): Player {
-        current = Player(start, sequence[next++], played)
+        current = Player(sequence[next++])
         return current
     }
 
