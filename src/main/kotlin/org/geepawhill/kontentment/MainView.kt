@@ -3,14 +3,14 @@ package org.geepawhill.kontentment
 import tornadofx.*
 
 class MainView : View("Gerrymandering Game") {
-    val script = Script()
-    val thread = OpenRndrThread(script).apply { start() }
-    override val root = vbox {
+    val model = MainModel()
+    override val root = borderpane {
         minWidth = 400.0
-        label("Hi Mom!")
-        button("Start") {
-            action {
-                thread.play()
+        top = toolbar {
+            button("Play") {
+                action {
+                    model.play()
+                }
             }
         }
     }

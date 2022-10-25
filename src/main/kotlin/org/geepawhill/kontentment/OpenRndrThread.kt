@@ -1,10 +1,11 @@
 package org.geepawhill.kontentment
 
+import org.geepawhill.kontentment.announce.Announcer
 import org.openrndr.application
 import org.openrndr.math.IntVector2
 import kotlin.concurrent.thread
 
-class OpenRndrThread(_script: Script) {
+class OpenRndrThread(_script: Script, val announcer: Announcer) {
     var script = _script
     var playing = false
     var player: Player = script.next(0.0)
