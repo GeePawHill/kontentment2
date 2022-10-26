@@ -1,17 +1,13 @@
 package org.geepawhill.kontentment
 
-import org.geepawhill.kontentment.announce.Announcer
-import org.geepawhill.kontentment.controller.NowPaused
-import org.geepawhill.kontentment.controller.NowPlaying
 import org.openrndr.Program
 import org.openrndr.application
 import org.openrndr.math.IntVector2
 import kotlin.concurrent.thread
 
-class OpenRndrThread(_script: Script, val announcer: Announcer) {
+class OpenRndrThread(_script: Script) {
     var script = _script
 
-    private val atomClock = AtomClock()
     private var current = script.next()
 
     val thread = thread(start = false, isDaemon = true) {
@@ -33,7 +29,7 @@ class OpenRndrThread(_script: Script, val announcer: Announcer) {
     }
 
     private fun Program.tick() {
-        atomClock.tick(seconds)
+        script.clock.tick(seconds)
     }
 
     private fun Program.drawCompleted() {
@@ -43,26 +39,17 @@ class OpenRndrThread(_script: Script, val announcer: Announcer) {
     }
 
     private fun Program.drawCurrent() {
-        val finished = current.interpolate(drawer, atomClock.delta)
+        val finished = current.interpolate(drawer, script.clock.delta)
         if (finished) {
             script.finished()
             current = script.next()
-            atomClock.reset()
+            script.clock.reset()
         }
     }
-
 
     fun start() {
         thread.start()
     }
 
-    fun resume() {
-        atomClock.resume()
-        announcer.announce(NowPlaying())
-    }
 
-    fun pause() {
-        atomClock.pause()
-        announcer.announce(NowPaused())
-    }
 }

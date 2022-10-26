@@ -1,7 +1,12 @@
 package org.geepawhill.kontentment
 
-class Script {
+import org.geepawhill.kontentment.announce.Announcer
+import org.geepawhill.kontentment.controller.NowPaused
+import org.geepawhill.kontentment.controller.NowPlaying
 
+class Script(val announcer: Announcer) {
+
+    val clock = AtomClock()
     val sequence = mutableListOf<Atom>()
     val completed = mutableListOf<Atom>()
     var next = 0
@@ -35,4 +40,13 @@ class Script {
         println("completed")
     }
 
+    fun resume() {
+        clock.resume()
+        announcer.announce(NowPlaying())
+    }
+
+    fun pause() {
+        clock.pause()
+        announcer.announce(NowPaused())
+    }
 }

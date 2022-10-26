@@ -8,8 +8,8 @@ import org.geepawhill.kontentment.announce.UiAnnouncer
 class MainModel {
 
     val announcer = UiAnnouncer()
-    var script = Script()
-    val thread = OpenRndrThread(script, announcer)
+    var script = Script(announcer)
+    val thread = OpenRndrThread(script)
 
     val canPlay = SimpleBooleanProperty(true)
     val canPause = SimpleBooleanProperty(false)
@@ -26,11 +26,11 @@ class MainModel {
     }
 
     fun play() {
-        thread.resume()
+        script.resume()
     }
 
     fun pause() {
-        thread.pause()
+        script.pause()
     }
 
 
