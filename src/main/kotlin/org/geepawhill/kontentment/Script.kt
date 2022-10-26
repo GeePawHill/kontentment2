@@ -19,7 +19,7 @@ class Script(val announcer: Announcer) {
             sequence += LineAtom()
         }
         sequence += Atom.NONE
-        current = sequence[0]
+        current = Atom.FILL
     }
 
     fun tick(now: Double, renderer: Renderer) {
