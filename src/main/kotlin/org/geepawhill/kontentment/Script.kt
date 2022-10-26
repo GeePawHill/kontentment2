@@ -8,23 +8,31 @@ class Script {
     var current: Atom
 
     init {
-        sequence.add(Atom.NONE)
-        (0..99).forEach {
+        sequence += Atom.NONE
+        (1..3).forEach {
             sequence += LineAtom()
         }
-        sequence.add(Atom.NONE)
+        sequence += Atom.NONE
         current = sequence[0]
     }
 
     fun hasNext() = next < sequence.size - 1
 
     fun next(): Atom {
-        current = sequence[next++]
+        if (!hasNext()) {
+            current = Atom.FILL
+        } else {
+            current = sequence[next++]
+        }
         return current
     }
 
-    fun finished(atom: Atom) {
-        completed.add(atom)
+    fun finished() {
+        if (current == Atom.FILL) return
+        completed.add(current)
+        println("Finished")
+        completed.forEach { println(it) }
+        println("completed")
     }
 
 }

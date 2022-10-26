@@ -36,32 +36,27 @@ class OpenRndrThread(_script: Script, val announcer: Announcer) {
         atomClock.tick(seconds)
     }
 
-    private fun Program.drawCurrent() {
-        val finished = current.interpolate(drawer, atomClock.delta)
-        if (finished) {
-            script.finished(current)
-            if (script.hasNext()) {
-                current = script.next()
-                atomClock.reset()
-                println(frameCount / seconds)
-            } else {
-                current = Atom.NONE
-                pause()
-            }
-        }
-    }
-
     private fun Program.drawCompleted() {
         script.completed.forEach {
             it.interpolate(drawer)
         }
     }
 
+    private fun Program.drawCurrent() {
+        val finished = current.interpolate(drawer, atomClock.delta)
+        if (finished) {
+            script.finished()
+            current = script.next()
+            atomClock.reset()
+        }
+    }
+
+
     fun start() {
         thread.start()
     }
 
-    fun play() {
+    fun resume() {
         atomClock.resume()
         announcer.announce(NowPlaying())
     }

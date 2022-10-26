@@ -9,5 +9,9 @@ interface Atom {
         val NONE = object : Atom {
             override fun interpolate(drawer: Drawer, delta: Double): Boolean = true
         }
+
+        val FILL = object : Atom {
+            override fun interpolate(drawer: Drawer, delta: Double): Boolean = true
+        }
     }
 }

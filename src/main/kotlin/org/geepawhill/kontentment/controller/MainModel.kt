@@ -26,7 +26,7 @@ class MainModel {
     }
 
     fun play() {
-        thread.play()
+        thread.resume()
     }
 
     fun pause() {
