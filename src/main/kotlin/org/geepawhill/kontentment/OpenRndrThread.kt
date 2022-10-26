@@ -1,14 +1,12 @@
 package org.geepawhill.kontentment
 
-import org.openrndr.Program
+import org.geepawhill.kontentment.render.DrawerRenderer
 import org.openrndr.application
 import org.openrndr.math.IntVector2
 import kotlin.concurrent.thread
 
 class OpenRndrThread(_script: Script) {
     var script = _script
-
-    private var current = script.next()
 
     val thread = thread(start = false, isDaemon = true) {
         application {
@@ -19,37 +17,15 @@ class OpenRndrThread(_script: Script) {
             }
 
             program {
+                val renderer = DrawerRenderer(drawer)
                 extend {
-                    tick()
-                    drawCompleted()
-                    drawCurrent()
+                    script.tick(seconds, renderer)
                 }
             }
         }
     }
 
-    private fun Program.tick() {
-        script.clock.tick(seconds)
-    }
-
-    private fun Program.drawCompleted() {
-        script.completed.forEach {
-            it.interpolate(drawer)
-        }
-    }
-
-    private fun Program.drawCurrent() {
-        val finished = current.interpolate(drawer, script.clock.delta)
-        if (finished) {
-            script.finished()
-            current = script.next()
-            script.clock.reset()
-        }
-    }
-
-    fun start() {
+    init {
         thread.start()
     }
-
-
 }

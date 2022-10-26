@@ -1,17 +1,17 @@
 package org.geepawhill.kontentment
 
-import org.openrndr.draw.Drawer
+import org.geepawhill.kontentment.render.Renderer
 
 interface Atom {
-    fun interpolate(drawer: Drawer, delta: Double = Double.MAX_VALUE): Boolean
+    fun interpolate(drawer: Renderer, delta: Double = Double.MAX_VALUE): Boolean
 
     companion object {
         val NONE = object : Atom {
-            override fun interpolate(drawer: Drawer, delta: Double): Boolean = true
+            override fun interpolate(drawer: Renderer, delta: Double): Boolean = true
         }
 
         val FILL = object : Atom {
-            override fun interpolate(drawer: Drawer, delta: Double): Boolean = true
+            override fun interpolate(drawer: Renderer, delta: Double): Boolean = true
         }
     }
 }

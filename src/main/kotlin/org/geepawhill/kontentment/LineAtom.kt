@@ -1,7 +1,7 @@
 package org.geepawhill.kontentment
 
+import org.geepawhill.kontentment.render.Renderer
 import org.openrndr.color.ColorRGBa
-import org.openrndr.draw.Drawer
 import org.openrndr.extra.noise.Random
 import java.lang.Double.min
 
@@ -14,7 +14,7 @@ class LineAtom : Atom {
 
     val duration = from.distance(to) * 0.005
 
-    override fun interpolate(drawer: Drawer, delta: Double): Boolean {
+    override fun interpolate(drawer: Renderer, delta: Double): Boolean {
         val fraction = min(1.0, delta / duration)
         val newTo = from.along(fraction, to)
         drawer.stroke = ColorRGBa.WHITE

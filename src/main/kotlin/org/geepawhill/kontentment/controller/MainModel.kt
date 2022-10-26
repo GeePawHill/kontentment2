@@ -15,7 +15,6 @@ class MainModel {
     val canPause = SimpleBooleanProperty(false)
 
     init {
-        thread.start()
         announcer.subscribe(NowPlaying::class) { _ -> onPlayingChange(true) }
         announcer.subscribe(NowPaused::class) { _ -> onPlayingChange(false) }
     }

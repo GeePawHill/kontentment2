@@ -3,6 +3,7 @@ package org.geepawhill.kontentment
 import org.geepawhill.kontentment.announce.Announcer
 import org.geepawhill.kontentment.controller.NowPaused
 import org.geepawhill.kontentment.controller.NowPlaying
+import org.geepawhill.kontentment.render.Renderer
 
 class Script(val announcer: Announcer) {
 
@@ -19,6 +20,25 @@ class Script(val announcer: Announcer) {
         }
         sequence += Atom.NONE
         current = sequence[0]
+    }
+
+    fun tick(now: Double, renderer: Renderer) {
+        clock.tick(now)
+        drawCompleted(renderer)
+        drawCurrent(renderer)
+    }
+
+    fun drawCompleted(renderer: Renderer) {
+        completed.forEach { it.interpolate(renderer, Double.MAX_VALUE) }
+    }
+
+    fun drawCurrent(renderer: Renderer) {
+        val finished = current.interpolate(renderer, clock.delta)
+        if (finished) {
+            finished()
+            current = next()
+            clock.reset()
+        }
     }
 
     fun hasNext() = next < sequence.size - 1
