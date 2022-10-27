@@ -8,18 +8,18 @@ import org.geepawhill.kontentment.render.Renderer
 class Script(val announcer: Announcer) {
 
     val clock = AtomClock()
-    val sequence = mutableListOf<Atom>()
-    val completed = mutableListOf<Atom>()
+    val sequence = mutableListOf<Gesture>()
+    val completed = mutableListOf<Gesture>()
     var next = 0
-    var current: Atom
+    var current: Gesture
 
     init {
-        sequence += Atom.NONE
+        sequence += Gesture.NONE
         (1..3).forEach {
-            sequence += LineAtom()
+            sequence += LineGesture()
         }
-        sequence += Atom.NONE
-        current = Atom.FILL
+        sequence += Gesture.NONE
+        current = Gesture.FILL
     }
 
     fun tick(now: Double, renderer: Renderer) {
@@ -29,11 +29,11 @@ class Script(val announcer: Announcer) {
     }
 
     fun drawCompleted(renderer: Renderer) {
-        completed.forEach { it.interpolate(renderer, Double.MAX_VALUE) }
+        completed.forEach { it.fast(renderer, clock) }
     }
 
     fun drawCurrent(renderer: Renderer) {
-        val finished = current.interpolate(renderer, clock.delta)
+        val finished = current.slow(renderer, clock)
         if (finished) {
             finished()
             current = next()
@@ -43,9 +43,9 @@ class Script(val announcer: Announcer) {
 
     fun hasNext() = next < sequence.size - 1
 
-    fun next(): Atom {
+    fun next(): Gesture {
         if (!hasNext()) {
-            current = Atom.FILL
+            current = Gesture.FILL
         } else {
             current = sequence[next++]
         }
@@ -53,11 +53,8 @@ class Script(val announcer: Announcer) {
     }
 
     fun finished() {
-        if (current == Atom.FILL) return
+        if (current == Gesture.FILL) return
         completed.add(current)
-        println("Finished")
-        completed.forEach { println(it) }
-        println("completed")
     }
 
     fun resume() {
