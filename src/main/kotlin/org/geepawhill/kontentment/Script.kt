@@ -1,13 +1,11 @@
 package org.geepawhill.kontentment
 
 import org.geepawhill.kontentment.announce.Announcer
-import org.geepawhill.kontentment.controller.NowPaused
-import org.geepawhill.kontentment.controller.NowPlaying
 import org.geepawhill.kontentment.render.Renderer
 
 class Script(val announcer: Announcer) {
 
-    val clock = AtomClock()
+    val clock = AtomClock(announcer)
     val sequence = mutableListOf<Gesture>()
     val completed = mutableListOf<Gesture>()
     var next = 0
@@ -15,6 +13,10 @@ class Script(val announcer: Announcer) {
 
     init {
         sequence += Gesture.NONE
+        (1..3).forEach {
+            sequence += LineGesture()
+        }
+        sequence += PauseGesture()
         (1..3).forEach {
             sequence += LineGesture()
         }
@@ -59,11 +61,9 @@ class Script(val announcer: Announcer) {
 
     fun resume() {
         clock.resume()
-        announcer.announce(NowPlaying())
     }
 
     fun pause() {
         clock.pause()
-        announcer.announce(NowPaused())
     }
 }

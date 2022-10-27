@@ -1,6 +1,10 @@
 package org.geepawhill.kontentment
 
-class AtomClock {
+import org.geepawhill.kontentment.announce.Announcer
+import org.geepawhill.kontentment.controller.NowPaused
+import org.geepawhill.kontentment.controller.NowPlaying
+
+class AtomClock(val announcer: Announcer) {
 
     var delta: Double = 0.0
         private set
@@ -18,12 +22,14 @@ class AtomClock {
         if (playing) return
         playing = true
         start = real - delta
+        announcer.announce(NowPlaying())
     }
 
     fun pause() {
         if (!playing) return
         playing = false
         start = real - delta
+        announcer.announce(NowPaused())
     }
 
     fun tick(now: Double) {
@@ -33,9 +39,4 @@ class AtomClock {
         }
     }
 
-    fun tick(now: Double, playing: Boolean) {
-        tick(now)
-        if (playing) resume()
-        else pause()
-    }
 }
