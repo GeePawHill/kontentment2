@@ -1,0 +1,57 @@
+# Notes
+
+## 2022-10-27
+
+### Basic Architecture Established
+
+This project integrates two _different_ "graphical" libraries.
+OPENRNDR is a high-speed game engine, and TornadoFx is a Kotlin wrapper around JavaFx.
+
+The role of OPENRNDR is to run a "game loop": this is a very tight "fast as you can run" loop that drives an OpenGL window.
+Each pass through that loop gives us a chance to redraw/change that window.
+OPENRNDR runs in a separate thread and using a separate window from the rest of the application.
+Hereafter, we'll call it the O-thread for short.
+
+The role of TornadoFx is to serve as the primary user interface for controlling the OPENRNDR loop and allowing users to develop and edit scripts.
+TornadoFx -- hereafter the T-thread, is the _primary_ thread of the application.
+The T-thread owns the O-thread and uses it to get tick() events from O-thread's loop.
+
+#### How T-Thread and O-Thread Interact
+
+Because the T-thread owns the O-thread, it can actually talk to that thread any time it wants.
+In fact, it really doesn't need to: All it does is start that thread and let it run.
+
+The O-thread talks _back_ to the T-thread through a single method call, `tick(...)`.
+The arguments to the tick call are two:
+
+1. A Render object, which knows how to use the O-thread's internal drawer.
+
+2. A seconds number that represents the time in seconds (a Double) since the O-thread was started.
+
+As a result, the O-thread is very simple:
+
+----
+        application {
+            configure {
+                width = 1080
+                height = 720
+                position = IntVector2(0, 0)
+            }
+
+            program {
+                val renderer = DrawerRenderer(drawer)
+                extend {
+                    script.tick(seconds, renderer)
+                }
+            }
+        }
+----
+
+That `DrawerRenderer` is a very thin wrapper around the OPENRNDR `Drawer` class.
+It is there so that we can test the Script object without having an actual OPENRNDR loop running.
+
+An open question just now: What thread management if any will we need?
+Too soon to be sure, but I suspect we may have to synchronize `tick()`.
+
+####
+

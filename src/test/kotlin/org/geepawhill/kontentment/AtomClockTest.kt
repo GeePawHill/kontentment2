@@ -1,11 +1,14 @@
 package org.geepawhill.kontentment
 
 import org.assertj.core.api.Assertions.assertThat
+import org.geepawhill.kontentment.announce.CollectingAnnouncer
+import org.geepawhill.kontentment.controller.PlayingChange
 import org.junit.jupiter.api.Test
 
 class AtomClockTest {
 
-    val clock = AtomClock()
+    val announcer = CollectingAnnouncer()
+    val clock = AtomClock(announcer)
 
     @Test
     fun `starts with reset and paused`() {
@@ -19,6 +22,32 @@ class AtomClockTest {
         clock.tick(1.0)
         clock.tick(2.0)
         assertThat(clock.delta).isEqualTo(2.0)
+    }
+
+    @Test
+    fun `resume announces if paused`() {
+        clock.resume()
+        assertThat(announcer.announcements).containsExactly(PlayingChange(true))
+    }
+
+    @Test
+    fun `resume does not announce if already playing`() {
+        clock.resume()
+        clock.resume()
+        assertThat(announcer.announcements).containsExactly(PlayingChange(true))
+    }
+
+    @Test
+    fun `pause announces if playing`() {
+        clock.resume()
+        clock.pause()
+        assertThat(announcer.announcements).containsExactly(PlayingChange(true), PlayingChange(false))
+    }
+
+    @Test
+    fun `pause does not announce if already paused`() {
+        clock.pause()
+        assertThat(announcer.announcements).isEmpty()
     }
 
     @Test

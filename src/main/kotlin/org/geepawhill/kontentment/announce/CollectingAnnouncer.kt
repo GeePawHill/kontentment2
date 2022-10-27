@@ -2,7 +2,7 @@ package org.geepawhill.kontentment.announce
 
 import kotlin.reflect.KClass
 
-class SinkAnnouncer : Announcer {
+class CollectingAnnouncer : Announcer {
     val announcements = mutableListOf<Announcement>()
 
     override fun <T : Announcement> announce(announcement: T) {

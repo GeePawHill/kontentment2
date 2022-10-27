@@ -1,8 +1,7 @@
 package org.geepawhill.kontentment
 
 import org.geepawhill.kontentment.announce.Announcer
-import org.geepawhill.kontentment.controller.NowPaused
-import org.geepawhill.kontentment.controller.NowPlaying
+import org.geepawhill.kontentment.controller.PlayingChange
 
 class AtomClock(val announcer: Announcer) {
 
@@ -22,14 +21,14 @@ class AtomClock(val announcer: Announcer) {
         if (playing) return
         playing = true
         start = real - delta
-        announcer.announce(NowPlaying())
+        announcer.announce(PlayingChange(true))
     }
 
     fun pause() {
         if (!playing) return
         playing = false
         start = real - delta
-        announcer.announce(NowPaused())
+        announcer.announce(PlayingChange(false))
     }
 
     fun tick(now: Double) {
