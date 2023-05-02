@@ -17,7 +17,7 @@ repositories {
 }
 
 application {
-    mainClass.set("org.geepawhill.kontentment.app.AppKt")
+    mainClass.set("org.geepawhill.kontentment.app.MainKt")
 }
 
 tasks.withType<Test> {

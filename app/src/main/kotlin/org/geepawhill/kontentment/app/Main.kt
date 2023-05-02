@@ -1,6 +1,6 @@
 package org.geepawhill.kontentment.app
 
-class App {
+class Main {
 }
 
 fun main() {
