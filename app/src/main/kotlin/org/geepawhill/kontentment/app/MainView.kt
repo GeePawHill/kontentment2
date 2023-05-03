@@ -4,13 +4,12 @@ import javafx.geometry.Orientation
 import javafx.scene.Parent
 import tornadofx.*
 
-class MainView : Fragment() {
+class MainView(val model: Model) : Fragment() {
     override val root: Parent = borderpane {
         center = splitpane {
             orientation = Orientation.HORIZONTAL
-            this += ScriptView()
-            this += CanvasAndDetailView()
+            this += ScriptView(model)
+            this += CanvasAndDetailView(model)
         }
     }
-
 }
