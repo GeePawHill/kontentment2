@@ -1,6 +1,8 @@
 package org.geepawhill.kontentment.app
 
 import javafx.scene.Parent
+import org.geepawhill.kontentment.app.kwrappers.klabel
+import org.geepawhill.kontentment.app.kwrappers.kstackpane
 import tornadofx.*
 
 class CanvasView(val model: Model) : Fragment() {
@@ -22,8 +24,8 @@ class CanvasView(val model: Model) : Fragment() {
                 }
             }
         }
-        center = stackpane {
-            label("Canvas")
+        center = kstackpane(model) {
+            klabel(model, "Canvas")
         }
     }
 }

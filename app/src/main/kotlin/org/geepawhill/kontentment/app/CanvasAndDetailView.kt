@@ -5,12 +5,13 @@ import javafx.geometry.Orientation
 import javafx.scene.Scene
 import javafx.scene.control.SplitPane
 import javafx.stage.Stage
+import org.geepawhill.kontentment.app.kwrappers.kstackpane
 import tornadofx.*
 
 class CanvasAndDetailView(val model: Model) : Fragment() {
     val canvasView = CanvasView(model)
     val canvasStage = Stage()
-    val canvasFrame = stackpane()
+    val canvasFrame = kstackpane(model)
 
     override val root: SplitPane = splitpane {
         orientation = Orientation.VERTICAL
