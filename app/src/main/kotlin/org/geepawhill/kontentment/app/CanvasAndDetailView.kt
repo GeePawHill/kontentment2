@@ -1,7 +1,7 @@
 package org.geepawhill.kontentment.app
 
+import javafx.event.EventHandler
 import javafx.geometry.Orientation
-import javafx.scene.Parent
 import javafx.scene.Scene
 import javafx.scene.control.SplitPane
 import javafx.stage.Stage
@@ -20,6 +20,9 @@ class CanvasAndDetailView(val model: Model) : Fragment() {
 
     init {
         canvasStage.scene = Scene(canvasFrame)
+        canvasStage.onCloseRequest = EventHandler { _ ->
+            model.windowing.isCanvasPopped.value = false
+        }
         model.windowing.isCanvasPopped.addListener { _, _, new -> changeCanvas() }
     }
 
