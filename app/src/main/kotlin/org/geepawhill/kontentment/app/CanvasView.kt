@@ -1,14 +1,14 @@
 package org.geepawhill.kontentment.app
 
 import javafx.scene.Parent
-import org.geepawhill.kontentment.app.kwrappers.klabel
-import org.geepawhill.kontentment.app.kwrappers.kstackpane
+import org.geepawhill.kontentment.app.kwrappers.KAspectPane
 import tornadofx.*
 
 class CanvasView(val model: Model) : Fragment() {
+    val aspectPane = KAspectPane(1.777)
     override val root: Parent = borderpane {
-        minWidth = 400.0
-        minHeight = 300.0
+        minWidth = 10.0
+        minHeight = 10.0
         backgroundProperty().bind(model.windowing.skin.normalBackground)
         top = toolbar {
             backgroundProperty().bind(model.windowing.skin.normalBackground)
@@ -24,8 +24,6 @@ class CanvasView(val model: Model) : Fragment() {
                 }
             }
         }
-        center = kstackpane(model) {
-            klabel(model, "Canvas")
-        }
+        center = aspectPane
     }
 }
