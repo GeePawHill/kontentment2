@@ -1,15 +1,22 @@
 package org.geepawhill.kontentment.app.kwrappers
 
+import javafx.event.EventTarget
 import javafx.scene.canvas.Canvas
 import javafx.scene.layout.StackPane
 import javafx.scene.paint.Color
+import org.geepawhill.kontentment.app.Model
 import tornadofx.*
 
 
-class KAspectPane(val widthToHeight: Double) : StackPane() {
+class KPresentationPane(val model: Model) : StackPane() {
     val canvas = Canvas(1.777 * 300.0, 300.0)
+    private val widthToHeight by model.presentationWidthToHeight
 
     init {
+        model.presentationWidthToHeight.addListener { _, _, _ ->
+            resetCanvasDimensions()
+        }
+        prefWidth = 500.0
         minHeight = 10.0
         minWidth = 10.0
         this += canvas
@@ -18,6 +25,11 @@ class KAspectPane(val widthToHeight: Double) : StackPane() {
 
     override fun layoutChildren() {
         println("P: ${width} X ${height}")
+        resetCanvasDimensions()
+        super.layoutChildren()
+    }
+
+    private fun resetCanvasDimensions() {
         val newWidth = snapSizeX(width) - (snappedLeftInset() + snappedRightInset())
         val newHeight = snapSizeY(height) - (snappedTopInset() + snappedBottomInset())
 
@@ -30,7 +42,6 @@ class KAspectPane(val widthToHeight: Double) : StackPane() {
             canvas.width = widthFromHeight
             canvas.height = newHeight
         }
-        super.layoutChildren()
         drawOnCanvas()
     }
 
@@ -39,7 +50,7 @@ class KAspectPane(val widthToHeight: Double) : StackPane() {
             fill = Color.BLACK
             fillRect(0.0, 0.0, canvas.width, canvas.height)
             stroke = Color.RED
-            lineWidth = 3.0
+            lineWidth = 1.0
             val endX = canvas.width - 2.0
             val endY = canvas.height - 2.0
             strokeLine(2.0, 2.0, endX, 2.0)
@@ -50,4 +61,15 @@ class KAspectPane(val widthToHeight: Double) : StackPane() {
             strokeLine(2.0, endY, endX, 2.0)
         }
     }
+}
+
+fun EventTarget.kpresentationpane(
+    model: Model,
+    widthToHeight: Double,
+    op: KPresentationPane.() -> Unit = {}
+): KPresentationPane {
+    val pane = KPresentationPane(model).apply {
+        model.windowing.normalRegion(this)
+    }
+    return opcr(this, pane, op)
 }

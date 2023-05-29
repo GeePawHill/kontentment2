@@ -1,11 +1,10 @@
 package org.geepawhill.kontentment.app
 
 import javafx.scene.Parent
-import org.geepawhill.kontentment.app.kwrappers.KAspectPane
+import org.geepawhill.kontentment.app.kwrappers.kpresentationpane
 import tornadofx.*
 
 class CanvasView(val model: Model) : Fragment() {
-    val aspectPane = KAspectPane(1.777)
     override val root: Parent = borderpane {
         minWidth = 10.0
         minHeight = 10.0
@@ -24,6 +23,6 @@ class CanvasView(val model: Model) : Fragment() {
                 }
             }
         }
-        center = aspectPane
+        center = kpresentationpane(model, 1.7777)
     }
 }

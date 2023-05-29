@@ -20,6 +20,16 @@ class ScriptView(val model: Model) : Fragment() {
                     model.windowing.skin.select(1)
                 }
             }
+            button("display") {
+                action {
+                    model.presentationWidthToHeight.value = 1.7777
+                }
+            }
+            button("square") {
+                action {
+                    model.presentationWidthToHeight.value = 1.0
+                }
+            }
         }
         center = kstackpane(model) {
             minWidth = 300.0
