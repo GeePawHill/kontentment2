@@ -1,4 +1,4 @@
-package org.geepawhill.kontentment.app
+package org.geepawhill.kontentment
 
 import javafx.geometry.Orientation
 import javafx.scene.Parent

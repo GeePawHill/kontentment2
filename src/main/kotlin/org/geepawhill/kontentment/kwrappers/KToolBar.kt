@@ -1,8 +1,8 @@
-package org.geepawhill.kontentment.app.kwrappers
+package org.geepawhill.kontentment.kwrappers
 
 import javafx.event.EventTarget
 import javafx.scene.control.ToolBar
-import org.geepawhill.kontentment.app.Model
+import org.geepawhill.kontentment.Model
 import tornadofx.*
 
 class KToolBar(val model: Model) : ToolBar()

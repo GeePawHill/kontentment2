@@ -1,7 +1,6 @@
-package org.geepawhill.kontentment.app
+package org.geepawhill.kontentment
 
 import javafx.beans.property.SimpleDoubleProperty
-import javax.print.SimpleDoc
 
 class Model {
     val windowing = WindowingModel()

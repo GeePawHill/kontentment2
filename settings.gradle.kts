@@ -1,2 +1,1 @@
-rootProject.name = "kontentment"
-include("app")
+rootProject.name = "kontentment2"

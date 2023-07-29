@@ -1,9 +1,9 @@
-package org.geepawhill.kontentment.app
+package org.geepawhill.kontentment
 
 import javafx.scene.Parent
 import javafx.scene.layout.Region
-import org.geepawhill.kontentment.app.kwrappers.klabel
-import org.geepawhill.kontentment.app.kwrappers.kstackpane
+import org.geepawhill.kontentment.kwrappers.klabel
+import org.geepawhill.kontentment.kwrappers.kstackpane
 import tornadofx.*
 
 

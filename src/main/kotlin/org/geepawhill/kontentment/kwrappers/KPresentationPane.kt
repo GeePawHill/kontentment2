@@ -1,10 +1,10 @@
-package org.geepawhill.kontentment.app.kwrappers
+package org.geepawhill.kontentment.kwrappers
 
 import javafx.event.EventTarget
 import javafx.scene.canvas.Canvas
 import javafx.scene.layout.StackPane
 import javafx.scene.paint.Color
-import org.geepawhill.kontentment.app.Model
+import org.geepawhill.kontentment.Model
 import tornadofx.*
 
 

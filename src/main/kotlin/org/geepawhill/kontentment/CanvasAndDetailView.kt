@@ -1,11 +1,11 @@
-package org.geepawhill.kontentment.app
+package org.geepawhill.kontentment
 
 import javafx.event.EventHandler
 import javafx.geometry.Orientation
 import javafx.scene.Scene
 import javafx.scene.control.SplitPane
 import javafx.stage.Stage
-import org.geepawhill.kontentment.app.kwrappers.kstackpane
+import org.geepawhill.kontentment.kwrappers.kstackpane
 import tornadofx.*
 
 class CanvasAndDetailView(val model: Model) : Fragment() {

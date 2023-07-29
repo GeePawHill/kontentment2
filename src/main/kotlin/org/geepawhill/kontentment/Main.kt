@@ -1,4 +1,4 @@
-package org.geepawhill.kontentment.app
+package org.geepawhill.kontentment
 
 import javafx.application.Application
 import javafx.scene.Scene

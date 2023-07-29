@@ -1,4 +1,4 @@
-package org.geepawhill.kontentment.app
+package org.geepawhill.kontentment
 
 import javafx.beans.property.SimpleBooleanProperty
 import javafx.scene.control.Label

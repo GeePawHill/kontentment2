@@ -1,8 +1,8 @@
-package org.geepawhill.kontentment.app.kwrappers
+package org.geepawhill.kontentment.kwrappers
 
 import javafx.event.EventTarget
 import javafx.scene.layout.StackPane
-import org.geepawhill.kontentment.app.Model
+import org.geepawhill.kontentment.Model
 import tornadofx.*
 
 class KStackPane(val model: Model) : StackPane()

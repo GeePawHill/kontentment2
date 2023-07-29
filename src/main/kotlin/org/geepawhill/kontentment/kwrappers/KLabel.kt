@@ -1,9 +1,9 @@
-package org.geepawhill.kontentment.app.kwrappers
+package org.geepawhill.kontentment.kwrappers
 
 import javafx.event.EventTarget
 import javafx.scene.Node
 import javafx.scene.control.Label
-import org.geepawhill.kontentment.app.Model
+import org.geepawhill.kontentment.Model
 import tornadofx.*
 
 class KLabel(val model: Model, text: String) : Label(text)

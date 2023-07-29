@@ -1,10 +1,10 @@
-package org.geepawhill.kontentment.app
+package org.geepawhill.kontentment
 
 import javafx.scene.Parent
-import org.geepawhill.kontentment.app.kwrappers.kborderpane
-import org.geepawhill.kontentment.app.kwrappers.klabel
-import org.geepawhill.kontentment.app.kwrappers.kstackpane
-import org.geepawhill.kontentment.app.kwrappers.ktoolbar
+import org.geepawhill.kontentment.kwrappers.kborderpane
+import org.geepawhill.kontentment.kwrappers.klabel
+import org.geepawhill.kontentment.kwrappers.kstackpane
+import org.geepawhill.kontentment.kwrappers.ktoolbar
 import tornadofx.*
 
 class ScriptView(val model: Model) : Fragment() {

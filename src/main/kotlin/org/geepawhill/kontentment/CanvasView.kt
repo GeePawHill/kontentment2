@@ -1,7 +1,7 @@
-package org.geepawhill.kontentment.app
+package org.geepawhill.kontentment
 
 import javafx.scene.Parent
-import org.geepawhill.kontentment.app.kwrappers.kpresentationpane
+import org.geepawhill.kontentment.kwrappers.kpresentationpane
 import tornadofx.*
 
 class CanvasView(val model: Model) : Fragment() {
