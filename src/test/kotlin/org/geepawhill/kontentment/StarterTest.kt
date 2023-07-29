@@ -1,4 +1,4 @@
-package org.geepawhill.maker
+package org.geepawhill.kontentment
 
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test

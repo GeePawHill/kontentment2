@@ -26,9 +26,9 @@ class Skin {
     companion object {
         val DEFAULT_NORMAL_BACKGROUND = Background(BackgroundFill(Color.DARKGRAY, null, null))
         val ALTERNATE_NORMAL_BACKGROUND = Background(BackgroundFill(Color.ORCHID, null, null))
-        val DEFAULT_NORMAL_FONT = Font.font(20.0)
-        val ALTERNATE_NORMAL_FONT = Font.font(24.0)
-        val DEFAULT_NORMAL_TEXTFILL = Color.BLACK
-        val ALTERNATE_NORMAL_TEXTFILL = Color.WHITE
+        val DEFAULT_NORMAL_FONT = Font.font(20.0)!!
+        val ALTERNATE_NORMAL_FONT = Font.font(24.0)!!
+        val DEFAULT_NORMAL_TEXTFILL = Color.BLACK!!
+        val ALTERNATE_NORMAL_TEXTFILL = Color.WHITE!!
     }
 }

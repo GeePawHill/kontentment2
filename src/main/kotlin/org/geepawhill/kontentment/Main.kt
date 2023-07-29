@@ -5,7 +5,6 @@ import javafx.scene.Scene
 import javafx.stage.Stage
 
 class Main : Application() {
-    val secondary = Stage()
     override fun start(primaryStage: Stage?) {
         val model = Model()
         val view = MainView(model).root

@@ -12,7 +12,7 @@ class CanvasView(val model: Model) : Fragment() {
         top = toolbar {
             backgroundProperty().bind(model.windowing.skin.normalBackground)
             button("Out") {
-                model.windowing.isCanvasPopped.addListener { _, old, new ->
+                model.windowing.isCanvasPopped.addListener { _, _, new ->
                     when (new) {
                         true -> text = "In"
                         false -> text = "out"
@@ -23,6 +23,6 @@ class CanvasView(val model: Model) : Fragment() {
                 }
             }
         }
-        center = kpresentationpane(model, 1.7777)
+        center = kpresentationpane(model)
     }
 }

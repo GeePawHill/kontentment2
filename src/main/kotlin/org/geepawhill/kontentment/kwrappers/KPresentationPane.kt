@@ -9,7 +9,7 @@ import tornadofx.*
 
 
 class KPresentationPane(val model: Model) : StackPane() {
-    val canvas = Canvas(1.777 * 300.0, 300.0)
+    private val canvas = Canvas(1.777 * 300.0, 300.0)
     private val widthToHeight by model.presentationWidthToHeight
 
     init {
@@ -24,7 +24,6 @@ class KPresentationPane(val model: Model) : StackPane() {
     }
 
     override fun layoutChildren() {
-        println("P: ${width} X ${height}")
         resetCanvasDimensions()
         super.layoutChildren()
     }
@@ -45,7 +44,7 @@ class KPresentationPane(val model: Model) : StackPane() {
         drawOnCanvas()
     }
 
-    fun drawOnCanvas() {
+    private fun drawOnCanvas() {
         with(canvas.graphicsContext2D) {
             fill = Color.BLACK
             fillRect(0.0, 0.0, canvas.width, canvas.height)
@@ -65,7 +64,6 @@ class KPresentationPane(val model: Model) : StackPane() {
 
 fun EventTarget.kpresentationpane(
     model: Model,
-    widthToHeight: Double,
     op: KPresentationPane.() -> Unit = {}
 ): KPresentationPane {
     val pane = KPresentationPane(model).apply {

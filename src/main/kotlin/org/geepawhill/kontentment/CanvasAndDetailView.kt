@@ -9,9 +9,9 @@ import org.geepawhill.kontentment.kwrappers.kstackpane
 import tornadofx.*
 
 class CanvasAndDetailView(val model: Model) : Fragment() {
-    val canvasView = CanvasView(model)
-    val canvasStage = Stage()
-    val canvasFrame = kstackpane(model)
+    private val canvasView = CanvasView(model)
+    private val canvasStage = Stage()
+    private val canvasFrame = kstackpane(model)
 
     override val root: SplitPane = splitpane {
         orientation = Orientation.VERTICAL
@@ -24,10 +24,10 @@ class CanvasAndDetailView(val model: Model) : Fragment() {
         canvasStage.onCloseRequest = EventHandler { _ ->
             model.windowing.isCanvasPopped.value = false
         }
-        model.windowing.isCanvasPopped.addListener { _, _, new -> changeCanvas() }
+        model.windowing.isCanvasPopped.addListener { _, _, _ -> changeCanvas() }
     }
 
-    fun changeCanvas() {
+    private fun changeCanvas() {
         if (model.windowing.isCanvasPopped.value) {
             root.items.remove(canvasView.root)
             canvasFrame.children.add(canvasView.root)
