@@ -7,16 +7,14 @@ import javafx.scene.paint.Color
 import org.geepawhill.kontentment.Model
 import tornadofx.*
 
-
 class KPresentationPane(val model: Model) : StackPane() {
-    private val canvas = Canvas(1.777 * 300.0, 300.0)
-    private val widthToHeight by model.presentationWidthToHeight
+    private val canvas = Canvas(DEFAULT_WIDTH, DEFAULT_HEIGHT)
 
     init {
         model.presentationWidthToHeight.addListener { _, _, _ ->
             resetCanvasDimensions()
         }
-        prefWidth = 500.0
+        prefWidth = DEFAULT_WIDTH
         minHeight = 10.0
         minWidth = 10.0
         this += canvas
@@ -29,20 +27,23 @@ class KPresentationPane(val model: Model) : StackPane() {
     }
 
     private fun resetCanvasDimensions() {
-        val newWidth = snapSizeX(width) - (snappedLeftInset() + snappedRightInset())
-        val newHeight = snapSizeY(height) - (snappedTopInset() + snappedBottomInset())
+        val heightConstrainedByWidth = snapSizeY(contentWidth() / model.presentationWidthToHeight.value)
+        val widthConstraintedByHeight = snapSizeX(contentHeight() * model.presentationWidthToHeight.value)
 
-        val widthByHeight = snapSizeY(newWidth / widthToHeight)
-        if (widthByHeight < newHeight) {
-            canvas.width = newWidth
-            canvas.height = widthByHeight
+        if (heightConstrainedByWidth < contentHeight()) {
+            canvas.width = contentWidth()
+            canvas.height = heightConstrainedByWidth
         } else {
-            val widthFromHeight = snapSizeX(newHeight * widthToHeight)
-            canvas.width = widthFromHeight
-            canvas.height = newHeight
+            canvas.width = widthConstraintedByHeight
+            canvas.height = contentHeight()
         }
         drawOnCanvas()
     }
+
+
+    private fun contentHeight() = snapSizeY(height) - (snappedTopInset() + snappedBottomInset())
+
+    private fun contentWidth() = snapSizeX(width) - (snappedLeftInset() + snappedRightInset())
 
     private fun drawOnCanvas() {
         with(canvas.graphicsContext2D) {
@@ -59,6 +60,11 @@ class KPresentationPane(val model: Model) : StackPane() {
             strokeLine(2.0, 2.0, endX, endY)
             strokeLine(2.0, endY, endX, 2.0)
         }
+    }
+
+    companion object {
+        private const val DEFAULT_HEIGHT = 300.0
+        private const val DEFAULT_WIDTH = 1.777 * DEFAULT_HEIGHT
     }
 }
 
