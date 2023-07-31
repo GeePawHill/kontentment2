@@ -25,6 +25,7 @@ class CanvasAndDetailView(val model: Model) : Fragment() {
             model.windowing.isCanvasPopped.value = false
         }
         model.windowing.isCanvasPopped.addListener { _, _, _ -> changeCanvas() }
+        model.windowing.isCanvasFullScreen.addListener { _, _, _ -> canvasFullScreen() }
     }
 
     private fun changeCanvas() {
@@ -37,6 +38,9 @@ class CanvasAndDetailView(val model: Model) : Fragment() {
             canvasFrame.children.remove(canvasView.root)
             root.items.add(0, canvasView.root)
         }
+    }
+
+    private fun canvasFullScreen() {
     }
 
 }

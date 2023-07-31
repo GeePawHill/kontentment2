@@ -8,9 +8,9 @@ class CanvasView(val model: Model) : Fragment() {
     override val root: Parent = borderpane {
         minWidth = 10.0
         minHeight = 10.0
-        backgroundProperty().bind(model.windowing.skin.normalBackground)
+        model.windowing.normalRegion(this)
         top = toolbar {
-            backgroundProperty().bind(model.windowing.skin.normalBackground)
+            model.windowing.normalToolbar(this)
             button("Out") {
                 model.windowing.isCanvasPopped.addListener { _, _, new ->
                     when (new) {
