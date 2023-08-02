@@ -6,7 +6,9 @@ import tornadofx.*
 
 class MainView(val model: Model) : Fragment() {
 
-    val clockLabel = label(model.gametime)
+    val clockLabel = label(model.gametime) {
+        model.windowing.normalLabel(this)
+    }
     val playButton = button("Play") {
         action {
             model.playOrPause()
