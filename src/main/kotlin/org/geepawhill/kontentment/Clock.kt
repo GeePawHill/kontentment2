@@ -4,7 +4,15 @@ import javafx.animation.AnimationTimer
 import javafx.beans.property.DoubleProperty
 import javafx.beans.property.SimpleDoubleProperty
 
-class Clock(val tick: (delta: Double) -> Unit) : AnimationTimer() {
+class Clock(val tick: (delta: Double) -> Unit) {
+    class ClockTimer(val handler: (now: Long) -> Unit) : AnimationTimer() {
+        override fun handle(now: Long) {
+            handler(now)
+        }
+    }
+
+    val pulse = ClockTimer(this::handle)
+
     var pauseStart: Long = 0
     var animationStart: Long = 0
     var animationDuration: DoubleProperty = SimpleDoubleProperty(0.0)
@@ -27,14 +35,14 @@ class Clock(val tick: (delta: Double) -> Unit) : AnimationTimer() {
         }
     }
 
-    override fun start() {
-        super.start()
+    fun start() {
+        pulse.start()
         isActive = true
         restartScheduled = true
     }
 
-    override fun stop() {
-        super.stop()
+    fun stop() {
+        pulse.stop()
         pauseStart = 0
         isPaused = false
         isActive = false
@@ -43,7 +51,7 @@ class Clock(val tick: (delta: Double) -> Unit) : AnimationTimer() {
         animationDuration.set(0.0)
     }
 
-    override fun handle(now: Long) {
+    fun handle(now: Long) {
         if (pauseScheduled) {
             pauseStart = now
             isPaused = true
