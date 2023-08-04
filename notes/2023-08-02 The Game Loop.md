@@ -135,3 +135,61 @@ We're *so* close to being able to write a microtest for Clock.
 
 [UML Diagram showing objects interacting. A clock has a timer, but it
 *gets* its timer by being passed, currently, a JavaFxTimerFactory. That factory only knows how to make one kind of timer: the one based on using JavaFx's AnimationTimer.]
+
+Step. Pull an interface TimerFactory up out of JavaFxTimerFactory, and make Clock depend on the interface instead of the
+concrete class.
+
+Step: Make a TestTimerFactory that implements *both* of TimerFactory and Timer. His makeTimer function just stashes the
+lambda and returns himself.
+
+That's a weird thing, and there are other ways to do it, but this is the simplest one-file answer.
+
+Let me explain.
+
+Here's the gist:
+https://gist.github.com/GeePawHill/ef093535c6b23e7483b2602f96562186
+
+This guy is both a TimerFactory *and* the only Timer object it can create.
+
+Why?!?!?
+
+If we created a TestTimerFactory that made TestTimers, how will find the TestTimer that we want to use to call back to
+the Clock?
+
+Clock doesn't know it's a TestTimer, and doesn't publish it's timer field anyway.
+
+This way, the test makes the TestTimerFactory, which is also the Timer, so it can call and control the timer as needed.
+
+I freely admit that this is idiomatic, and my team and I would have to know the what and the why of it.
+
+Upside is: even going in blind, it's 15 lines of code to read and understand.
+
+There are other solutions, but they all involve globals. I just hate a global variable.
+
+So there ya go. Believe it or not, I can write a test against Clock, sending in whatever "now's" I want, and seeing what
+happens.
+
+Look, Ma, no JavaFx dependency in the test!
+
+Now that I have a testable clock, I can test it. My first dumb test: if the timer ticks with a long, the clock calls
+back its owner with a double.
+
+That's in, and pushed.
+
+But now, having come this far, I'm going to think a little bit not just about the bug, but about the behavior I really
+want from the clock.
+
+We shall have a diet coke, and stare off into the distance for a little bit.
+
+I kinda knew it was gonna go this way. See, that internet-sourced GameLoop is for a game. Games don't have time the way
+scripts do. That is, games run forever, and the interesting thing there is the delta from the last time it called you.
+But scripts have time in a fixed range, and they do the exact same thing at the exact same time every time. Slightly
+different.
+
+Of course, you can go between the two modes easily. Until now, I have been using Clock to take me from AnimationTimer to
+delta's. But I don't *need* deltas. I need time-since-zero, and I need seekability.
+
+Is that, ultimately, what Clock's job is? Give me time-since-zero, and forget delta's.
+
+If that's the case, I should take my now-testable clock, gut it, and TDD it all the way out.
+

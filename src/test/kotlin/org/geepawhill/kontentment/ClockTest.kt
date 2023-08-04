@@ -19,5 +19,6 @@ class ClockTest {
         assertTrue(calls.isEmpty())
         factory.tick(1000)
         assertFalse(calls.isEmpty())
+        println(calls[0])
     }
 }
