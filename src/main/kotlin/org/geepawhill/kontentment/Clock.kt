@@ -3,7 +3,7 @@ package org.geepawhill.kontentment
 import javafx.beans.property.DoubleProperty
 import javafx.beans.property.SimpleDoubleProperty
 
-class Clock(timerFactory: JavaFxTimerFactory, val tick: (delta: Double) -> Unit) {
+class Clock(timerFactory: TimerFactory, val tick: (delta: Double) -> Unit) {
 
     val pulse = timerFactory.makeTimer(this::handle)
 
