@@ -91,3 +91,47 @@ lambda, and do the required overload of AnimationTimer::handle to call the lambd
 
 Step: Give Clock a new field "timer"  of ClockTimer, and pass it the lambda of calling ClockTimer's handle() method.
 
+Step: Remove the derivation from Clock to AnimationTimer. This causes syntax errors around overloads and calling super.
+Kill the overload markers, and make "super.x()" be "pulse.x()".
+
+That took much longer to describe than to do. Here's a picture of the change:
+
+The upshot of all that: THe Clock is no longer an AnimationTimer, but it is *dependent* on an AnimatimationTimer.
+
+That's okay, it's much easier to break a has-a dependency than to break an is-a dependency.
+
+(Note. It's pushed. I push any time I haven't made the UX worse. I don't wait until I've made it better. The difference
+is subtle but real. Doing the latter will make our steps much bigger than they ought to be.)
+
+This next bit, breaking the has-a dependency, would be dead easy, but for the callback lambda we need on the ClockTimer.
+
+It creates a little circle. If the Clock needs to call the ClockTimer and the ClockTimer needs to call the Clock, which
+one comes first?
+
+There are two usual answers. 1) Give one of them a setter for the other. Mutability. Ick.
+
+2) Make the Clock construct the ClockTimer. Whoops. Doesn't break the dependency. Ick.
+
+There's a way around this, but it's kinda heavy. Create a TimerFactory interface and pass *that* to the Clock's
+constructor. He can call that interface to get his Timer.
+
+Is it worth it? Mmmmmm. Tough call. Maybe not, but I'm gonna do it anyway, for the practice and the lesson.
+
+Step: Put that ClockTimer in its own file.
+
+Step: Pull up an interface out of it. Give it start() and stop().
+
+Step: Create a JavaFxTimerFactory. Give it a single method, makeTimer( tick:( delta:Double):Timer. It is literally just
+the constructor call.
+
+Step: Make Clock call its passed factory to get its Timer instance.
+
+Again. Way easier to do than to describe. :)
+
+Here's the current picture. BTW, each time I say Step, what I mean is, "it's working, I can push it." I don't always
+push every time, but I *can* push.
+
+We're *so* close to being able to write a microtest for Clock.
+
+[UML Diagram showing objects interacting. A clock has a timer, but it
+*gets* its timer by being passed, currently, a JavaFxTimerFactory. That factory only knows how to make one kind of timer: the one based on using JavaFx's AnimationTimer.]

@@ -12,7 +12,7 @@ class Model {
     val windowing = WindowingModel()
     val presentationWidthToHeight = SimpleDoubleProperty(DEFAULT_WIDTH_TO_HEIGHT)
 
-    private val clock = Clock { delta -> tick(delta) }
+    private val clock = Clock(JavaFxTimerFactory()) { delta -> tick(delta) }
 
     fun playOrPause() {
         if (isPlaying.value) pause()

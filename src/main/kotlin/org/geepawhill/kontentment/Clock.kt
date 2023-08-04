@@ -1,17 +1,11 @@
 package org.geepawhill.kontentment
 
-import javafx.animation.AnimationTimer
 import javafx.beans.property.DoubleProperty
 import javafx.beans.property.SimpleDoubleProperty
 
-class Clock(val tick: (delta: Double) -> Unit) {
-    class ClockTimer(val handler: (now: Long) -> Unit) : AnimationTimer() {
-        override fun handle(now: Long) {
-            handler(now)
-        }
-    }
+class Clock(timerFactory: JavaFxTimerFactory, val tick: (delta: Double) -> Unit) {
 
-    val pulse = ClockTimer(this::handle)
+    val pulse = timerFactory.makeTimer(this::handle)
 
     var pauseStart: Long = 0
     var animationStart: Long = 0
