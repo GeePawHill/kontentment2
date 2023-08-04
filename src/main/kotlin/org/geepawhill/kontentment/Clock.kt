@@ -4,7 +4,7 @@ import javafx.animation.AnimationTimer
 import javafx.beans.property.DoubleProperty
 import javafx.beans.property.SimpleDoubleProperty
 
-class GameLoop(val tick: (delta: Double) -> Unit) : AnimationTimer() {
+class Clock(val tick: (delta: Double) -> Unit) : AnimationTimer() {
     var pauseStart: Long = 0
     var animationStart: Long = 0
     var animationDuration: DoubleProperty = SimpleDoubleProperty(0.0)
