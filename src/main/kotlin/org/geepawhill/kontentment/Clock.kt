@@ -1,15 +1,11 @@
 package org.geepawhill.kontentment
 
-import javafx.beans.property.DoubleProperty
-import javafx.beans.property.SimpleDoubleProperty
-
 class Clock(timerFactory: TimerFactory, val tick: (delta: Double) -> Unit) {
 
-    val pulse = timerFactory.makeTimer(this::handle)
+    val timer = timerFactory.makeTimer(this::handle)
 
     var pauseStart: Long = 0
     var animationStart: Long = 0
-    var animationDuration: DoubleProperty = SimpleDoubleProperty(0.0)
     var lastFrameTimeNanos: Long = 0
     var isPaused = false
     var isActive = false
@@ -30,19 +26,18 @@ class Clock(timerFactory: TimerFactory, val tick: (delta: Double) -> Unit) {
     }
 
     fun start() {
-        pulse.start()
+        timer.start()
         isActive = true
         restartScheduled = true
     }
 
     fun stop() {
-        pulse.stop()
+        timer.stop()
         pauseStart = 0
         isPaused = false
         isActive = false
         pauseScheduled = false
         playScheduled = false
-        animationDuration.set(0.0)
     }
 
     fun handle(now: Long) {
@@ -62,8 +57,6 @@ class Clock(timerFactory: TimerFactory, val tick: (delta: Double) -> Unit) {
             restartScheduled = false
         }
         if (!isPaused) {
-            val animDuration = now - animationStart
-            animationDuration.set(animDuration / 1e9)
             val secondsSinceLastFrame = ((now - lastFrameTimeNanos) / 1e9)
             lastFrameTimeNanos = now
             tick(secondsSinceLastFrame)
