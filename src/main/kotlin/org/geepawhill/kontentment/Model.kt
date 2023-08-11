@@ -7,8 +7,8 @@ import javafx.beans.property.SimpleStringProperty
 class Model {
 
     val isPlaying = SimpleBooleanProperty(false)
-    var playTime = 0.0
-    val gametime = SimpleStringProperty("00000000.0")
+    var playTime = 0L
+    val gametime = SimpleStringProperty("000000000")
     val windowing = WindowingModel()
     val presentationWidthToHeight = SimpleDoubleProperty(DEFAULT_WIDTH_TO_HEIGHT)
 
@@ -20,9 +20,9 @@ class Model {
         isPlaying.value = !isPlaying.value
     }
 
-    fun tick(delta: Double) {
-        playTime += delta
-        val text = String.format("%010.1f", playTime)
+    fun tick(tenths: Long) {
+        playTime += tenths
+        val text = String.format("%010d", playTime)
         gametime.set(text)
     }
 

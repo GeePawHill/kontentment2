@@ -1,6 +1,6 @@
 package org.geepawhill.kontentment
 
-class Clock(timerFactory: TimerFactory, val tick: (delta: Double) -> Unit) {
+class Clock(timerFactory: TimerFactory, val tick: (tenths: Long) -> Unit) {
 
     val timer = timerFactory.makeTimer(this::handle)
 
@@ -57,9 +57,13 @@ class Clock(timerFactory: TimerFactory, val tick: (delta: Double) -> Unit) {
             restartScheduled = false
         }
         if (!isPaused) {
-            val secondsSinceLastFrame = ((now - lastFrameTimeNanos) / 1e9)
+            val decisSinceLastFrame = ((now - lastFrameTimeNanos) / NANOS_TO_DECIS)
             lastFrameTimeNanos = now
-            tick(secondsSinceLastFrame)
+            tick(decisSinceLastFrame)
         }
+    }
+
+    companion object {
+        const val NANOS_TO_DECIS = 100000000L
     }
 }
