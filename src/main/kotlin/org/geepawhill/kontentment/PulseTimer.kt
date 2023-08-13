@@ -1,6 +1,6 @@
 package org.geepawhill.kontentment
 
-interface Timer {
+interface PulseTimer {
     fun start()
     fun stop()
 }

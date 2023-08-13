@@ -1,12 +1,12 @@
 package org.geepawhill.kontentment
 
-class TestTimerFactory : TimerFactory, Timer {
+class TestingPulseTimerFactoryAndTimer : PulseTimerFactory, PulseTimer {
 
     var tick: (now: Long) -> Unit = {}
     var startsCalled = 0;
     var stopsCalled = 0;
 
-    override fun makeTimer(tick: (now: Long) -> Unit): Timer {
+    override fun makePulseTimer(tick: (now: Long) -> Unit): PulseTimer {
         this.tick = tick
         return this
     }
