@@ -4,62 +4,31 @@ class Clock(timerFactory: TimerFactory, val tick: (tenths: Long) -> Unit) {
 
     val timer = timerFactory.makeTimer(this::handle)
 
-    var pauseStart: Long = 0
-    var animationStart: Long = 0
-    var lastFrameTimeNanos: Long = 0
-    var isPaused = false
-    var isActive = false
-    var pauseScheduled = false
-    var playScheduled = false
-    var restartScheduled = false
+    private var isPlaying = false
+    private var playScheduled = false
+    private var ms = 0L;
+    private var lastPulse = 0L
 
     fun pause() {
-        if (!isPaused) {
-            pauseScheduled = true
-        }
     }
 
     fun play() {
-        if (isPaused) {
-            playScheduled = true
-        }
-    }
-
-    fun start() {
+        if (isPlaying) return
+        playScheduled = true
         timer.start()
-        isActive = true
-        restartScheduled = true
-    }
-
-    fun stop() {
-        timer.stop()
-        pauseStart = 0
-        isPaused = false
-        isActive = false
-        pauseScheduled = false
-        playScheduled = false
     }
 
     fun handle(now: Long) {
-        if (pauseScheduled) {
-            pauseStart = now
-            isPaused = true
-            pauseScheduled = false
-        }
         if (playScheduled) {
-            animationStart += now - pauseStart
-            isPaused = false
             playScheduled = false
+            lastPulse = now
+            isPlaying = true
         }
-        if (restartScheduled) {
-            isPaused = false
-            animationStart = now
-            restartScheduled = false
-        }
-        if (!isPaused) {
-            val decisSinceLastFrame = ((now - lastFrameTimeNanos) / NANOS_TO_DECIS)
-            lastFrameTimeNanos = now
-            tick(decisSinceLastFrame)
+        if (isPlaying) {
+            val delta = now - lastPulse
+            ms += delta / 1000000L
+            lastPulse = now
+            tick(ms)
         }
     }
 

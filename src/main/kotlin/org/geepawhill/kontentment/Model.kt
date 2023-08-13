@@ -28,7 +28,6 @@ class Model {
 
     fun play() {
         clock.play()
-        clock.start()
     }
 
     fun pause() {
