@@ -1,17 +1,24 @@
 package org.geepawhill.kontentment
 
-class Clock(timerFactory: TimerFactory, val tick: (tenths: Long) -> Unit) {
+class Clock(timerFactory: TimerFactory, val tick: (milliseconds: Long) -> Unit) {
 
-    val timer = timerFactory.makeTimer(this::handle)
+    private val timer = timerFactory.makeTimer(this::handle)
 
-    private var isPlaying = false
-    private var playScheduled = false
     private var ms = 0L;
+    private var isPlaying = false
+    private var seekScheduled = false
+    private var pauseScheduled = false
+    private var playScheduled = false
     private var lastPulse = 0L
+
+    fun seek(newMs: Long) {
+        ms = newMs
+        seekScheduled = true
+    }
 
     fun pause() {
         if (!isPlaying) return
-        timer.stop()
+        pauseScheduled = true
     }
 
     fun play() {
@@ -21,20 +28,30 @@ class Clock(timerFactory: TimerFactory, val tick: (tenths: Long) -> Unit) {
     }
 
     fun handle(now: Long) {
+        if (seekScheduled) {
+            seekScheduled = false
+            lastPulse = now
+        }
         if (playScheduled) {
             playScheduled = false
             lastPulse = now
             isPlaying = true
         }
+        if (pauseScheduled) {
+            timer.stop()
+            pauseScheduled = false
+            isPlaying = false
+        }
         if (isPlaying) {
             val delta = now - lastPulse
-            ms += delta / 1000000L
+            ms += delta / NANOS_TO_MILLIS
             lastPulse = now
             tick(ms)
         }
     }
 
+
     companion object {
-        const val NANOS_TO_DECIS = 100000000L
+        const val NANOS_TO_MILLIS = 1000000L
     }
 }

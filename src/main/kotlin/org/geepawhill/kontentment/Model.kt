@@ -20,9 +20,8 @@ class Model {
         isPlaying.value = !isPlaying.value
     }
 
-    fun tick(tenths: Long) {
-        playTime += tenths
-        val text = String.format("%010d", playTime)
+    fun tick(ms: Long) {
+        val text = String.format("%010d", ms)
         gametime.set(text)
     }
 
