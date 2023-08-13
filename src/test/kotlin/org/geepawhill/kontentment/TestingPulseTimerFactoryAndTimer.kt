@@ -6,8 +6,8 @@ class TestingPulseTimerFactoryAndTimer : PulseTimerFactory, PulseTimer {
     var startsCalled = 0;
     var stopsCalled = 0;
 
-    override fun makePulseTimer(tick: (now: Long) -> Unit): PulseTimer {
-        this.tick = tick
+    override fun makePulseTimer(pulseHandler: (ns: Long) -> Unit): PulseTimer {
+        this.tick = pulseHandler
         return this
     }
 

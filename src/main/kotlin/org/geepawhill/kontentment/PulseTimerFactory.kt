@@ -1,5 +1,5 @@
 package org.geepawhill.kontentment
 
 interface PulseTimerFactory {
-    fun makePulseTimer(tick: (now: Long) -> Unit): PulseTimer
+    fun makePulseTimer(pulseHandler: (ns: Long) -> Unit): PulseTimer
 }
