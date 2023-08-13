@@ -10,6 +10,8 @@ class Clock(timerFactory: TimerFactory, val tick: (tenths: Long) -> Unit) {
     private var lastPulse = 0L
 
     fun pause() {
+        if (!isPlaying) return
+        timer.stop()
     }
 
     fun play() {
