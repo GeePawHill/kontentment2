@@ -1,7 +1,6 @@
 package org.geepawhill.kontentment
 
 import org.junit.jupiter.api.Assertions.assertEquals
-import org.junit.jupiter.api.Disabled
 import org.junit.jupiter.api.Test
 
 class ClockTest {
@@ -66,12 +65,14 @@ class ClockTest {
         assertEquals(1, timer.startsCalled)
     }
 
-    @Disabled("Not ready yet")
     @Test
     fun `double pause is no op`() {
         clock.play()
+        makeTimerTickAt(100)
         clock.pause()
+        makeTimerTickAt(1000)
         clock.pause()
+        makeTimerTickAt(2000)
         assertEquals(1, timer.stopsCalled)
     }
 
