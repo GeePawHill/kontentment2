@@ -1,10 +1,10 @@
 package org.geepawhill.kontentment
 
-class Clock(pulseTimerFactory: PulseTimerFactory, val announceTime: (milliseconds: Long) -> Unit) {
+class Clock(pulseTimerFactory: PulseTimerFactory, val announceTime: (currentAnimationTimeMs: Long) -> Unit) {
 
     private val pulseTimer = pulseTimerFactory.makePulseTimer(this::pulse)
 
-    private var milliseconds = 0L;
+    private var currentAnimationTimeMs = 0L;
 
     private var isPlaying = false
 
@@ -12,7 +12,7 @@ class Clock(pulseTimerFactory: PulseTimerFactory, val announceTime: (millisecond
     private var pauseScheduled = false
     private var playScheduled = false
 
-    private var lastPulse = 0L
+    private var lastPulseNs = 0L
 
     fun play() {
         if (isPlaying) return
@@ -25,19 +25,19 @@ class Clock(pulseTimerFactory: PulseTimerFactory, val announceTime: (millisecond
         pauseScheduled = true
     }
 
-    fun seek(newMs: Long) {
-        milliseconds = newMs
+    fun seek(newAnimationTimeMs: Long) {
+        currentAnimationTimeMs = newAnimationTimeMs
         seekScheduled = true
     }
 
-    fun pulse(now: Long) {
+    fun pulse(pulseNs: Long) {
         if (seekScheduled) {
             seekScheduled = false
-            lastPulse = now
+            lastPulseNs = pulseNs
         }
         if (playScheduled) {
             playScheduled = false
-            lastPulse = now
+            lastPulseNs = pulseNs
             isPlaying = true
         }
         if (pauseScheduled) {
@@ -46,13 +46,12 @@ class Clock(pulseTimerFactory: PulseTimerFactory, val announceTime: (millisecond
             isPlaying = false
         }
         if (isPlaying) {
-            val delta = now - lastPulse
-            milliseconds += delta / NANOS_PER_MILLI
-            lastPulse = now
-            announceTime(milliseconds)
+            val deltaNs = pulseNs - lastPulseNs
+            currentAnimationTimeMs += deltaNs / NANOS_PER_MILLI
+            lastPulseNs = pulseNs
+            announceTime(currentAnimationTimeMs)
         }
     }
-
 
     companion object {
         const val NANOS_PER_MILLI = 1000000L
