@@ -8,14 +8,14 @@ class Clock(pulseTimerFactory: PulseTimerFactory, val announceTime: (currentAnim
 
     private var isPlaying = false
 
-    private var seekScheduled = false
-    private var playScheduled = false
+    private var forceDeltaToZero = false
 
     private var lastPulseNs = 0L
 
     fun play() {
         if (isPlaying) return
-        playScheduled = true
+        forceDeltaToZero = true
+        isPlaying = true
         pulseTimer.start()
     }
 
@@ -27,18 +27,13 @@ class Clock(pulseTimerFactory: PulseTimerFactory, val announceTime: (currentAnim
 
     fun seek(newAnimationTimeMs: Long) {
         currentAnimationTimeMs = newAnimationTimeMs
-        seekScheduled = true
+        forceDeltaToZero = true
     }
 
     fun pulse(pulseNs: Long) {
-        if (seekScheduled) {
-            seekScheduled = false
+        if (forceDeltaToZero) {
+            forceDeltaToZero = false
             lastPulseNs = pulseNs
-        }
-        if (playScheduled) {
-            playScheduled = false
-            lastPulseNs = pulseNs
-            isPlaying = true
         }
         if (isPlaying) {
             val deltaNs = pulseNs - lastPulseNs
