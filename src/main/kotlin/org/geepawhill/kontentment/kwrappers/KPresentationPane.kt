@@ -4,6 +4,7 @@ import javafx.event.EventTarget
 import javafx.scene.canvas.Canvas
 import javafx.scene.layout.StackPane
 import javafx.scene.paint.Color
+import org.geepawhill.kontentment.JavaFxDrawer
 import org.geepawhill.kontentment.Model
 import tornadofx.*
 
@@ -18,7 +19,7 @@ class KPresentationPane(val model: Model) : StackPane() {
         minHeight = 10.0
         minWidth = 10.0
         this += canvas
-        drawOnCanvas()
+        model.drawer.set(JavaFxDrawer(canvas))
     }
 
     override fun layoutChildren() {
@@ -37,7 +38,6 @@ class KPresentationPane(val model: Model) : StackPane() {
             canvas.width = widthConstraintedByHeight
             canvas.height = contentHeight()
         }
-        drawOnCanvas()
     }
 
 

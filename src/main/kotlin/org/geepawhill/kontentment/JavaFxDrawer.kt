@@ -1,5 +1,6 @@
 package org.geepawhill.kontentment
 
+import javafx.geometry.VPos
 import javafx.scene.canvas.Canvas
 import javafx.scene.paint.Color
 import tornadofx.*
@@ -11,6 +12,7 @@ class JavaFxDrawer(canvas: Canvas) : Drawer {
 
     override fun text(text: String) {
         context.stroke = Color.WHITE
+        context.textBaseline = VPos.TOP
         context.strokeText(text, 0.0, 0.0)
     }
 

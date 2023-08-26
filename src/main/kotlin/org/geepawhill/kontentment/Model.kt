@@ -2,6 +2,7 @@ package org.geepawhill.kontentment
 
 import javafx.beans.property.SimpleBooleanProperty
 import javafx.beans.property.SimpleDoubleProperty
+import javafx.beans.property.SimpleObjectProperty
 import javafx.beans.property.SimpleStringProperty
 
 class Model {
@@ -11,6 +12,7 @@ class Model {
     val gametime = SimpleStringProperty("000000000")
     val windowing = WindowingModel()
     val presentationWidthToHeight = SimpleDoubleProperty(DEFAULT_WIDTH_TO_HEIGHT)
+    val drawer = SimpleObjectProperty<Drawer>()
 
     private val clock = Clock(JavaFxPulseTimerFactory()) { delta -> tick(delta) }
 
@@ -23,6 +25,9 @@ class Model {
     fun tick(ms: Long) {
         val text = String.format("%010d", ms)
         gametime.set(text)
+        if (drawer.value == null) return;
+        drawer.value.blank()
+        drawer.value.text(text)
     }
 
     fun play() {
