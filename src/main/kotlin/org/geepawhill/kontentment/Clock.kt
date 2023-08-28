@@ -30,6 +30,10 @@ class Clock(pulseTimerFactory: PulseTimerFactory, val announceTime: (currentAnim
         forceDeltaToZero = true
     }
 
+    fun reAnnounce() {
+        announceTime(currentAnimationTimeMs)
+    }
+
     fun pulse(pulseNs: Long) {
         if (forceDeltaToZero) {
             forceDeltaToZero = false

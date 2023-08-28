@@ -38,8 +38,8 @@ class KPresentationPane(val model: Model) : StackPane() {
             canvas.width = widthConstraintedByHeight
             canvas.height = contentHeight()
         }
+        model.redraw()
     }
-
 
     private fun contentHeight() = snapSizeY(height) - (snappedTopInset() + snappedBottomInset())
 

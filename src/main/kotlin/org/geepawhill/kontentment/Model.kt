@@ -38,6 +38,10 @@ class Model {
         clock.pause()
     }
 
+    fun redraw() {
+        clock.reAnnounce()
+    }
+
     companion object {
         const val DEFAULT_WIDTH_TO_HEIGHT = 1.7777
     }
