@@ -38,8 +38,8 @@ class Model {
         clock.pause()
     }
 
-    fun redraw() {
-        clock.reAnnounce()
+    fun reAnnounceTime() {
+        clock.reAnnounceTime()
     }
 
     companion object {
