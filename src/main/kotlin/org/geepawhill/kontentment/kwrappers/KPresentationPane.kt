@@ -19,7 +19,7 @@ class KPresentationPane(val model: Model) : StackPane() {
         minHeight = 10.0
         minWidth = 10.0
         this += canvas
-        model.drawer.set(JavaFxDrawer(canvas))
+        model.drawer = JavaFxDrawer(canvas)
     }
 
     override fun layoutChildren() {

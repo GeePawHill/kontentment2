@@ -3,6 +3,7 @@ package org.geepawhill.kontentment
 import javafx.geometry.VPos
 import javafx.scene.canvas.Canvas
 import javafx.scene.paint.Color
+import org.geepawhill.kontentment.core.Drawer
 import tornadofx.*
 
 class JavaFxDrawer(canvas: Canvas) : Drawer {

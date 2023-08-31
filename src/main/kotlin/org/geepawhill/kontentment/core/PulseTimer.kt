@@ -1,4 +1,4 @@
-package org.geepawhill.kontentment
+package org.geepawhill.kontentment.core
 
 interface PulseTimer {
     fun start()

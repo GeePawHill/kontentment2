@@ -1,4 +1,4 @@
-package org.geepawhill.kontentment
+package org.geepawhill.kontentment.core
 
 class Clock(pulseTimerFactory: PulseTimerFactory, val announceTime: (currentAnimationTimeMs: Long) -> Unit) {
 

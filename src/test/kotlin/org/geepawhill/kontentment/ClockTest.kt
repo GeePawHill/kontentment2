@@ -1,5 +1,6 @@
 package org.geepawhill.kontentment
 
+import org.geepawhill.kontentment.core.Clock
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 
