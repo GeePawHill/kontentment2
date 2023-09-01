@@ -7,6 +7,7 @@ import javafx.beans.property.SimpleStringProperty
 import org.geepawhill.kontentment.core.Clock
 import org.geepawhill.kontentment.core.Drawer
 import org.geepawhill.kontentment.core.NullDrawer
+import org.geepawhill.kontentment.core.Script
 
 class Model {
 
@@ -15,6 +16,7 @@ class Model {
     val gametime = SimpleStringProperty("000000000")
     val windowing = WindowingModel()
     val presentationWidthToHeight = SimpleDoubleProperty(DEFAULT_WIDTH_TO_HEIGHT)
+    val script = SimpleObjectProperty(Script())
 
     var drawer: Drawer = NullDrawer()
 
@@ -29,8 +31,7 @@ class Model {
     fun tick(ms: Long) {
         val text = String.format("%010d", ms)
         gametime.set(text)
-        drawer.blank()
-        drawer.text(text)
+        script.value.draw(ms, drawer)
     }
 
     fun play() {
