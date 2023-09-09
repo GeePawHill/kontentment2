@@ -36,9 +36,14 @@ class MainView(val model: Model) : Fragment() {
                     model.currentStep.set(Strokes())
                 }
             }
-            button("Typing") {
+            button("Typing 1") {
                 action {
-                    model.currentStep.set(Typing())
+                    model.currentStep.set(Typing("Typing 1"))
+                }
+            }
+            button("Typing 2") {
+                action {
+                    model.currentStep.set(Typing("Typing 2"))
                 }
             }
         }

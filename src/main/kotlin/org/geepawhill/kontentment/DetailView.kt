@@ -36,6 +36,7 @@ class DetailView(val model: Model) : Fragment(), DetailViewChooser {
     override fun chooseTyping(typing: Typing) {
         strokesDetail.root.hide()
         typingDetail.root.show()
+        typingDetail.load(typing)
         nostepDetail.root.hide()
     }
 
