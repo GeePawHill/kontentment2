@@ -6,8 +6,10 @@ import javafx.beans.property.SimpleObjectProperty
 import javafx.beans.property.SimpleStringProperty
 import org.geepawhill.kontentment.core.Clock
 import org.geepawhill.kontentment.core.Drawer
+import org.geepawhill.kontentment.core.NoStep
 import org.geepawhill.kontentment.core.NullDrawer
 import org.geepawhill.kontentment.core.Script
+import org.geepawhill.kontentment.core.Step
 
 class Model {
 
@@ -17,6 +19,8 @@ class Model {
     val windowing = WindowingModel()
     val presentationWidthToHeight = SimpleDoubleProperty(DEFAULT_WIDTH_TO_HEIGHT)
     val script = SimpleObjectProperty(Script())
+
+    val currentStep = SimpleObjectProperty<Step>(NoStep())
 
     var drawer: Drawer = NullDrawer()
 

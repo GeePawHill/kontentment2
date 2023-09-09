@@ -2,6 +2,9 @@ package org.geepawhill.kontentment
 
 import javafx.geometry.Orientation
 import javafx.scene.Parent
+import org.geepawhill.kontentment.core.NoStep
+import org.geepawhill.kontentment.core.Strokes
+import org.geepawhill.kontentment.core.Typing
 import tornadofx.*
 
 class MainView(val model: Model) : Fragment() {
@@ -23,6 +26,21 @@ class MainView(val model: Model) : Fragment() {
         top = toolbar {
             this += clockLabel
             this += playButton
+            button("NoStep") {
+                action {
+                    model.currentStep.set(NoStep())
+                }
+            }
+            button("Strokes") {
+                action {
+                    model.currentStep.set(Strokes())
+                }
+            }
+            button("Typing") {
+                action {
+                    model.currentStep.set(Typing())
+                }
+            }
         }
         center = splitpane {
             orientation = Orientation.HORIZONTAL
